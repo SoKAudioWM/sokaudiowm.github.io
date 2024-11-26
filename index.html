@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>SoK: How Robust is Audio Watermarking in Generative AI models?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style type="text/css">
+        .tg {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .tg td {
+            border-color: inherit;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg th {
+            border-color: inherit;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg .tg-wa1i {
+            font-weight: bold;
+            text-align: center;
+            vertical-align: middle
+        }
+
+        .tg .tg-7btt {
+            border-color: inherit;
+            font-weight: bold;
+            text-align: center;
+            vertical-align: top
+        }
+
+        .tg .tg-0pky {
+            border-color: inherit;
+            text-align: left;
+            vertical-align: top
+        }
+
+        .container {
+            width: 1500px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <center>
+            <br>
+            <h1>SoK: How Robust is Audio Watermarking in Generative AI models?</h1>
+            <div style="border: 1px solid black; margin-top: 20px; margin-bottom: 10px;"></div>
+            <p><b>Abstract</b>: Audio watermarking has been used for provenance verification of AI-generated content
+                from generative models. It spawns a
+                wealth of applications for detecting AI-generated speech, protecting the music IP, and defending against
+                voice cloning
+                attacks. Generally, audio watermarking should be robust against removal attacks that distort the signal
+                to evade
+                detection. Many audio watermarking schemes claim robustness; however, these claims are often validated
+                in isolation
+                against a limited set of attacks. There is no systematic, empirical evaluation of robustness against a
+                comprehensive set
+                of removal attacks in the audio domain. This uncertainty complicates the deployment of watermarking
+                schemes in practice.
+                In this paper, we survey and evaluate whether recent audio watermarking schemes claiming robustness can
+                withstand a
+                broad range of removal attacks. First, we propose a taxonomy for 25 audio watermarking schemes. Second,
+                we summarize the
+                audio watermark technologies and their potential vulnerabilities. Third, we conduct a large-scale,
+                comprehensive
+                measurement study to evaluate the robustness of existing watermarking schemes. To facilitate this
+                analysis, we develop
+                an evaluation framework encompassing a total of 22 types of watermark removal attacks (109 different
+                configurations).
+                Our framework covers signal-level distortions, physical-level distortions, and AI-induced distortions.
+                We identify 8 new
+                attacks that are highly effective against all watermarks and discover 11 key findings that illustrate
+                their fundamental
+                weaknesses. Our study reveals critical insights: none of the surveyed watermarking schemes is robust
+                enough to withstand
+                all tested distortions in practice. The extensive evaluation offers a holistic view of how well— or
+                poorly—current
+                watermarking schemes fare under real-world threats.</p>
+            <div style="border: 1px solid black; margin-top: 20px; margin-bottom: 10px;"></div>
+            <p>Below, we present audio examples to demonstrate each attack on different watermarking schemes.</p>
+        </center>
+
+        <h5>Watermarking Schemes</h5>
+        <ul>
+            <li><b>Timbre</b>: <a href="https://arxiv.org/abs/2312.03410">Detecting Voice Cloning Attacks via Timbre
+                    Watermarking</a></li>
+            <li><b>AudioSeal</b>: <a href="https://arxiv.org/abs/2401.17264">Proactive Detection of Voice Cloning with
+                    Localized Watermarking</a></li>
+            <li><b>WavMark</b>: <a href="https://arxiv.org/abs/2308.12770">WavMark: Watermarking for Audio
+                    Generation</a></li>
+            <li><b>SilentCipher</b>: <a href="https://arxiv.org/abs/2406.03822">SilentCipher: Deep Audio
+                    Watermarking</a></li>
+            <li><b>FSVC</b>: <a href="https://ieeexplore.ieee.org/document/9468371">Desynchronization Attacks Resilient
+                    Watermarking Method Based on Frequency Singular Value Coefficient Modification</a></li>
+            <li><b>Patchwork</b>: <a href="https://ieeexplore.ieee.org/document/8025572">Patchwork-Based Multilayer
+                    Audio Watermarking</a></li>
+            <li><b>Norm-Space</b>: <a
+                    href="https://www.sciencedirect.com/science/article/abs/pii/S016516841830272X">Novel secured scheme
+                    for blind audio/speech norm-space watermarking by Arnold algorithm</a></li>
+            <li><b>audiowmark</b>: <a href="https://github.com/swesterfeld/audiowmark">audiowmark - Audio
+                    Watermarking</a></li>
+            <li><b>RobustDNN</b>: <a
+                    href="https://www.sciencedirect.com/science/article/abs/pii/S1051200421004206">Robust speech
+                    watermarking by a jointly trained embedder and detector using a DNN</a></li>
+        </ul>
+
+        <h5>Datasets</h5>
+        <ul>
+            <li><b>LJ</b>: <a href="https://keithito.com/LJ-Speech-Dataset/ ">LJ Speech Dataset</a></li>
+            <li><b>M4</b>: <a href="https://m4singer.github.io/">M4Singer Dataset</a></li>
+        </ul>
+
+        <div style="border-top: 1px solid grey; margin-top: 20px; margin-bottom: 10px;"></div>
+        <h3>Original Audio</h3>
+        <p><b>LJ</b>: [audio]<br><b>M4</b>: [audio]</p>
+
+        <div style="border-top: 1px solid grey; margin-top: 20px; margin-bottom: 10px;"></div>
+        <h3>Watermarked Audio</h3>
+        <table class="tg">
+            <thead>
+                <tr>
+                    <th class="tg-wa1i"></th>
+                    <th class="tg-7btt">Timbre</th>
+                    <th class="tg-7btt">AudioSeal</th>
+                    <th class="tg-7btt">WavMark</th>
+                    <th class="tg-7btt">SilentCipher</th>
+                    <th class="tg-7btt">FSVC</th>
+                    <th class="tg-7btt">Patchwork</th>
+                    <th class="tg-7btt">Norm-Space</th>
+                    <th class="tg-7btt">audiowmark</th>
+                    <th class="tg-7btt">RobustDNN</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="tg-wa1i">LJ</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">M4</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="border-top: 1px solid grey; margin-top: 20px; margin-bottom: 10px;"></div>
+        <h3>Signal-Level Distortion Attacks</h3>
+        <table class="tg">
+            <thead>
+                <tr>
+                    <th class="tg-wa1i" colspan="2"></th>
+                    <th class="tg-7btt">Timbre</th>
+                    <th class="tg-7btt">AudioSeal</th>
+                    <th class="tg-7btt">WavMark</th>
+                    <th class="tg-7btt">SilentCipher</th>
+                    <th class="tg-7btt">FSVC</th>
+                    <th class="tg-7btt">Patchwork</th>
+                    <th class="tg-7btt">Norm-Space</th>
+                    <th class="tg-7btt">audiowmark</th>
+                    <th class="tg-7btt">RobustDNN</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="tg-wa1i" colspan="2">Impulse Response Augmentation</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="10">Pitch Shift<br>(in cents)</td>
+                    <td class="tg-wa1i">-100</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">-50</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">-25</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">-12.5</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">-6.25</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">+6.25</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">+12.5</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">+25</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">+50</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">+100</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="11">Time Stretch</td>
+                    <td class="tg-wa1i">0.25x</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">0.5x</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">0.75x</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">0.9x</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">0.95x</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">1.05x</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">1.1x</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">1.25x</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">1.5x</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">1.75x</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">2x</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="10">Gaussian Noise<br>(SNR)</td>
+                    <td class="tg-wa1i">-20dB</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">-15dB</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">-10dB</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">-5dB</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">0dB</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">5dB</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">10dB</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">20dB</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">30dB</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">40dB</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="6">Bitcrush<br>(bit depth)</td>
+                    <td class="tg-wa1i">2</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">4</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">6</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">8</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">10</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">12</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="12">MP3 Compression</td>
+                    <td class="tg-wa1i">8kbps</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">16kbps</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">24kbps</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">32kbps</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">40kbps</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">48kbps</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">56kbps</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">64kbps</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">128kbps</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">192kbps</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">256kbps</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">320kbps</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="5">Background Noise<br>(SNR)</td>
+                    <td class="tg-wa1i">0dB</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">5dB</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">10dB</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">20dB</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">30dB</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="7">Cropping Audio<br>(% of audio cut)</td>
+                    <td class="tg-wa1i">25%</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">50%</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">75%</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">90%</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">95%</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">97%</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">99%</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="8">High-Pass Filter</td>
+                    <td class="tg-wa1i">500Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">1000Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">1500Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">2000Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">2500Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">3000Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">3500Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">4000Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="8">Low-Pass Filter</td>
+                    <td class="tg-wa1i">500Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">1000Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">1500Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">2000Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">2500Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">3000Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">3500Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">4000Hz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="6">Sample Suppression<br>(% of samples set to 0)</td>
+                    <td class="tg-wa1i">0.5%</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">1%</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">2.5%</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">5%</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">10%</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">25%</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="5">Resampling</td>
+                    <td class="tg-wa1i">2kHz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">4kHz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">8kHz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">16kHz</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                    <td class="tg-0pky">LJ: [audio]<br>M4: [audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">22.05kHz</td>
+                    <td class="tg-0pky">M4: [audio]</td>
+                    <td class="tg-0pky">M4: [audio]</td>
+                    <td class="tg-0pky">M4: [audio]</td>
+                    <td class="tg-0pky">M4: [audio]</td>
+                    <td class="tg-0pky">M4: [audio]</td>
+                    <td class="tg-0pky">M4: [audio]</td>
+                    <td class="tg-0pky">M4: [audio]</td>
+                    <td class="tg-0pky">M4: [audio]</td>
+                    <td class="tg-0pky">M4: [audio]</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="border-top: 1px solid grey; margin-top: 20px; margin-bottom: 10px;"></div>
+        <h3>Physical-Level Distortion Attacks</h3>
+        <p>Here, we re-record audio samples from the LJ Speech dataset at different distances with different equipment.
+        </p>
+        <ul>
+            <li><b>Default</b>: Macbook Pro 13-inch, M1, 2020, Built-in Microphone and Speaker</li>
+            <li><b>HyperX Mic</b>: HyperX QuadCast USB Condenser Microphone, Macbook Pro Built-in Speaker</li>
+            <li><b>Logitech Spk</b>: Macbook Pro Built-in Microphone, Logitech Z130 Speaker</li>
+        </ul>
+        <table class="tg">
+            <thead>
+                <tr>
+                    <th class="tg-wa1i" colspan="2"></th>
+                    <th class="tg-7btt">Timbre</th>
+                    <th class="tg-7btt">AudioSeal</th>
+                    <th class="tg-7btt">WavMark</th>
+                    <th class="tg-7btt">SilentCipher</th>
+                    <th class="tg-7btt">FSVC</th>
+                    <th class="tg-7btt">Patchwork</th>
+                    <th class="tg-7btt">Norm-Space</th>
+                    <th class="tg-7btt">audiowmark</th>
+                    <th class="tg-7btt">RobustDNN</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="tg-wa1i" rowspan="3">Close<br>(0.5m)</td>
+                    <td class="tg-wa1i">Default</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">HyperX Mic</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">Logitech Spk</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">Medium<br>(2.5m)</td>
+                    <td class="tg-wa1i">Default</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">Far<br>(5m)</td>
+                    <td class="tg-wa1i">Default</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="border-top: 1px solid grey; margin-top: 20px; margin-bottom: 10px;"></div>
+        <h3>AI-Induced Distortion Attacks</h3>
+
+        <h5>Voice Conversion</h5>
+        <p>(explain)</p><br>
+        <table class="tg">
+
+        </table>
+
+        <h5>Text-to-Speech</h5>
+        <p>(explain)</p><br>
+        <table class="tg">
+
+        </table>
+    </div>
+</body>
+
+</html>
