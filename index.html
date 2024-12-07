@@ -72,7 +72,7 @@
             <br>
             <h1>SoK: How Robust is Audio Watermarking in Generative AI models?</h1>
             <div style="border: 1px solid black; margin-top: 20px; margin-bottom: 10px;"></div>
-            <p><b>Abstract</b>: Audio watermarking has been used for provenance verification of AI-generated content
+            <p style="text-align: left;"><b>Abstract</b>: Audio watermarking has been used for provenance verification of AI-generated content
                 from generative models. It spawns a
                 wealth of applications for detecting AI-generated speech, protecting the music IP, and defending against
                 voice cloning
@@ -107,7 +107,7 @@
 
             <h2>Audio Watermarking Process</h2>
                 <img src="figures/watermark-cover1.png" alt="watermark secnario" style="width:60%; max-width:1200px;">
-            <div style="margin-top: 10px; font-size: 16px; line-height: 1.6;">
+            <div style="margin-top: 10px; font-size: 16px; line-height: 1.6; text-align: left;">
                 The figure above illustrates the audio watermarking process. A watermark generator encodes user-provided
                 data (e.g., '0101110') into an audio signal, creating a watermarked audio file. A watermark detector
                 then extracts and decodes this data from the audio to verify its authenticity.
@@ -118,9 +118,7 @@
             <h2>System Design</h2>
                     <img src="figures/System-Design.png" alt="System Design Diagram" style="width:100%; max-width:1200px;">
             <div style="border: 1px solid black; margin-top: 20px; margin-bottom: 10px;"></div>
-            <p>Below, we present audio examples to demonstrate each attack on different watermarking schemes.</p>
         </center>
-
         <h5>Watermarking Schemes</h5>
         <ul>
             <li><b>Timbre</b>: <a href="https://arxiv.org/abs/2312.03410">Detecting Voice Cloning Attacks via Timbre
@@ -151,39 +149,32 @@
             <li><b>M4</b>: <a href="https://m4singer.github.io/">M4Singer Dataset</a></li>
         </ul>
 
-        <div style="border-top: 1px solid grey; margin-top: 20px; margin-bottom: 10px;"></div>
-        <h3>Original Audio</h3>
-        <p><b>LJ</b>:<br><audio class="class_audio" controls="" style="width: 400px;">
-                <source src="audio_samples/og/lj.wav" type="audio/wav">Your browser does not support the audio tag
-            </audio><br><br>
-            </p>
-        <p>
-        <b>LJ Spectrogram</b>:<br>
-            <div style="text-align: center; margin-top: 20px;">
-            <img src="audio_samples/og/lj.png" alt="Original Audio Spectrogram" style="width: 80%; max-width: 600px; height: auto;">
-        </p>
-            <b>M4</b>:<br>[audio]
-        <div style="border-top: 1px solid grey; margin-top: 20px; margin-bottom: 10px;"></div>
-        <h3>Watermarked Audio</h3>
+        <div style="border-top: 1px solid black; margin-top: 20px; margin-bottom: 10px;"></div>
+        <h3>Watermarked Audio Samples</h3>
+        <div style="margin-top: 10px; font-size: 16px; line-height: 1.6; text-align: left;">
+            Below, we present audio examples to demonstrate each attack on different watermarking schemes.
+        </div>
         <table class="tg">
             <thead>
                 <tr>
                     <th class="tg-wa1i"></th>
+                    <th class="tg-7btt" style="font-family: 'Georgia', serif; font-size: 22px; font-weight: 600; color: #444; letter-spacing: 1px; text-transform: capitalize; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">
+                        Unwatermarked
+                    </th>
                     <th class="tg-7btt">Timbre</th>
                     <th class="tg-7btt">AudioSeal</th>
                     <th class="tg-7btt">WavMark</th>
                     <th class="tg-7btt">SilentCipher</th>
-                    <th class="tg-7btt">FSVC</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td class="tg-wa1i">LJ</td>
-                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/wm/lj/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
-                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/wm/lj/audioseal.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
-                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/wm/lj/wavmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
-                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/wm/lj/silentcipher.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
-                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/wm/lj/fsvc.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 230px;"><source src="audio_samples/og/lj.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 230px;"><source src="audio_samples/wm/lj/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 230px;"><source src="audio_samples/wm/lj/audioseal.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 230px;"><source src="audio_samples/wm/lj/wavmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 230px;"><source src="audio_samples/wm/lj/silentcipher.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
                     <td class="tg-wa1i">M4</td>
@@ -195,11 +186,11 @@
                 </tr>
                 <tr>
                     <td class="tg-wa1i">Spectrograms</td>
+                    <td class="tg-0pky"><img src="audio_samples/og/lj.png" alt="Original Image" style="width: 225px; height: auto;"></td>
                     <td class="tg-0pky"><img src="audio_samples/wm/lj/timbre.png" alt="Timbre Image" style="width: 225px; height: auto;"></td>
                     <td class="tg-0pky"><img src="audio_samples/wm/lj/audioseal.png" alt="AudioSeal Image" style="width: 225px; height: auto;"></td>
                     <td class="tg-0pky"><img src="audio_samples/wm/lj/wavmark.png" alt="WavMark Image" style="width: 225px; height: auto;"></td>
                     <td class="tg-0pky"><img src="audio_samples/wm/lj/silentcipher.png" alt="SilentCipher Image" style="width: 225px; height: auto;"></td>
-                    <td class="tg-0pky"><img src="audio_samples/wm/lj/fsvc.png" alt="FSVC Image" style="width: 225px; height: auto;"></td>
                 </tr>
             </tbody>
         </table>
@@ -208,6 +199,7 @@
             <thead>
                 <tr>
                     <th class="tg-wa1i"></th>
+                    <th class="tg-7btt">FSVC</th>
                     <th class="tg-7btt">Patchwork</th>
                     <th class="tg-7btt">Norm-Space</th>
                     <th class="tg-7btt">audiowmark</th>
@@ -217,10 +209,11 @@
             <tbody>
                 <tr>
                     <td class="tg-wa1i">LJ</td>
-                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/wm/lj/patchwork.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
-                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/wm/lj/norm_space.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
-                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/wm/lj/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
-                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/wm/lj/robustdnn.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 230px;"><source src="audio_samples/wm/lj/fsvc.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 230px;"><source src="audio_samples/wm/lj/patchwork.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 230px;"><source src="audio_samples/wm/lj/norm_space.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 230px;"><source src="audio_samples/wm/lj/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 230px;"><source src="audio_samples/wm/lj/robustdnn.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
                     <td class="tg-wa1i">M4</td>
@@ -228,9 +221,11 @@
                     <td class="tg-0pky">[audio]</td>
                     <td class="tg-0pky">[audio]</td>
                     <td class="tg-0pky">[audio]</td>
+                    <td class="tg-0pky">[audio]</td>
                 </tr>
                 <tr>
                     <td class="tg-wa1i">Spectrograms</td>
+                    <td class="tg-0pky"><img src="audio_samples/wm/lj/fsvc.png" alt="FSVC Image" style="width: 225px; height: auto;"></td>
                     <td class="tg-0pky"><img src="audio_samples/wm/lj/patchwork.png" alt="Patchwork Image" style="width: 225px; height: auto;"></td>
                     <td class="tg-0pky"><img src="audio_samples/wm/lj/norm_space.png" alt="Norm-Space Image" style="width: 225px; height: auto;"></td>
                     <td class="tg-0pky"><img src="audio_samples/wm/lj/audiowmark.png" alt="audiowmark Image" style="width: 225px; height: auto;"></td>
@@ -243,7 +238,10 @@
         <h3>AI-Induced Distortion Attacks</h3>
 
         <h5>Voice Conversion</h5>
-        <p>(explain)</p>
+        <div style="margin-top: 10px; font-size: 16px; line-height: 1.6; text-align: left;">
+            We directly feed the watermarked audio samples to the Voice Conversion Models and the goal is to get
+            unwatermarked audio samples from the Voice Conversion Models.
+        </div>
         <table class="tg">
             <thead>
                 <tr>
@@ -379,7 +377,11 @@
 
         <br>
         <h5>Text-to-Speech</h5>
-        <p>(explain)</p>
+        <div style="margin-top: 10px; font-size: 16px; line-height: 1.6; text-align: left;">
+            We directly feed the text that aligns with the watermarked audio, and also provides the watermarked audio as
+            a reference to the pre-trained TTS model, to generate a sound that seems like the watermarked audiosource,
+            without including the watermark.
+        </div>
         <table class="tg">
             <thead>
                 <tr>
