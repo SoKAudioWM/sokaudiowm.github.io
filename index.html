@@ -46,6 +46,11 @@
             vertical-align: middle
         }
 
+        .tg .text-percentage {
+            text-align: center;
+            vertical-align: middle
+        }
+
         .tg .tg-7btt {
             border-color: inherit;
             font-weight: bold;
@@ -66,11 +71,6 @@
             border: none;
             border-radius: 5px;
         }
-        .audio_container {
-
-        }
-
-
 
     </style>
 
@@ -168,7 +168,7 @@
             <thead>
                 <tr>
                     <th class="tg-wa1i"></th>
-                    <th class="tg-7btt" style="font-family: 'Georgia', serif; font-size: 22px; font-weight: 600; color: #444; letter-spacing: 1px; text-transform: capitalize; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">
+                    <th class="tg-7btt" style="font-family: 'Georgia', serif; font-size: 22px; font-weight: 600; color: green; letter-spacing: 1px; text-transform: capitalize; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">
                         Unwatermarked
                     </th>
                     <th class="tg-7btt">Timbre</th>
@@ -271,7 +271,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="tg-wa1i" rowspan="2">AdaIn-VC <br>(zero-shot)</td>
+                    <td class="tg-wa1i" rowspan="4">AdaIn-VC <br>(zero-shot)</td>
                     <td class="tg-wa1i">RM WM</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/audioseal.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
@@ -281,6 +281,17 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/patchwork.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/norm_space.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">65.34%</td>
+                    <td class="text-percentage">59.59%</td>
+                    <td class="text-percentage">51.26%</td>
+                    <td class="text-percentage">49.78%</td>
+                    <td class="text-percentage">57.18%</td>
+                    <td class="text-percentage">49.71%</td>
+                    <td class="text-percentage">49.86%</td>
+                    <td class="text-percentage">49.29%</td>
                 </tr>
                 <tr>
                     <td class="tg-wa1i">ADD WM</td>
@@ -294,7 +305,18 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/adaptive_vc/add/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
-                    <td class="tg-wa1i" rowspan="2">FragmentVC <br>(zero-shot)</td>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">93.06%</td>
+                    <td class="text-percentage"></td>
+                    <td class="text-percentage">49.10%</td>
+                    <td class="text-percentage">49.27%</td>
+                    <td class="text-percentage">50.30%</td>
+                    <td class="text-percentage">51.35%</td>
+                    <td class="text-percentage">49.88%</td>
+                    <td class="text-percentage">49.83%</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="4">FragmentVC <br>(zero-shot)</td>
                     <td class="tg-wa1i">RM WM</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/FragmentVC/rm/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"></td>
@@ -304,6 +326,17 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/FragmentVC/rm/patchwork.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/FragmentVC/rm/norm_space.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/FragmentVC/rm/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">56.28%</td>
+                    <td class="text-percentage"></td>
+                    <td class="text-percentage">49.76%</td>
+                    <td class="text-percentage">50.37%</td>
+                    <td class="text-percentage">53.54%</td>
+                    <td class="text-percentage">51.35%</td>
+                    <td class="text-percentage">49.24%</td>
+                    <td class="text-percentage">50.10%</td>
                 </tr>
                 <tr>
                     <td class="tg-wa1i">ADD WM</td>
@@ -317,7 +350,18 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/FragmentVC/add/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
-                    <td class="tg-wa1i" rowspan="2">MediumVC <br>(zero-shot)</td>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">58.38%</td>
+                    <td class="text-percentage"></td>
+                    <td class="text-percentage">50.00%</td>
+                    <td class="text-percentage">49.99%</td>
+                    <td class="text-percentage">52.50%</td>
+                    <td class="text-percentage">51.15%</td>
+                    <td class="text-percentage">49.66%</td>
+                    <td class="text-percentage">49.81%</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="4">MediumVC <br>(zero-shot)</td>
                     <td class="tg-wa1i">RM WM</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/MediumVC/rm/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/MediumVC/rm/audioseal.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
@@ -327,6 +371,17 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/MediumVC/rm/patchwork.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/MediumVC/rm/norm_space.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/MediumVC/rm/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">48.52%</td>
+                    <td class="text-percentage">53.64%</td>
+                    <td class="text-percentage">49.70%</td>
+                    <td class="text-percentage">49.96%</td>
+                    <td class="text-percentage">63.66%</td>
+                    <td class="text-percentage">53.03%</td>
+                    <td class="text-percentage">50.25%</td>
+                    <td class="text-percentage">50.83%</td>
                 </tr>
                 <tr>
                     <td class="tg-wa1i">ADD WM</td>
@@ -340,7 +395,18 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/MediumVC/add/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
-                    <td class="tg-wa1i" rowspan="2">YourTTS VC <br>(zero-shot)</td>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">49.08%</td>
+                    <td class="text-percentage"></td>
+                    <td class="text-percentage">50.90%</td>
+                    <td class="text-percentage">50.55%</td>
+                    <td class="text-percentage">52.25%</td>
+                    <td class="text-percentage">52.91%</td>
+                    <td class="text-percentage">50.55%</td>
+                    <td class="text-percentage">50.78%</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="4">YourTTS VC <br>(zero-shot)</td>
                     <td class="tg-wa1i">RM WM</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/YourTTS/rm/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/YourTTS/rm/audioseal.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
@@ -350,6 +416,17 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/YourTTS/rm/patchwork.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/YourTTS/rm/norm_space.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/YourTTS/rm/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">59.64%</td>
+                    <td class="text-percentage">57.50%</td>
+                    <td class="text-percentage">50.06%</td>
+                    <td class="text-percentage">49.61%</td>
+                    <td class="text-percentage">53.31%</td>
+                    <td class="text-percentage">52.26%</td>
+                    <td class="text-percentage">50.34%</td>
+                    <td class="text-percentage">50.40%</td>
                 </tr>
                 <tr>
                     <td class="tg-wa1i">ADD WM</td>
@@ -363,7 +440,18 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/YourTTS/add/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
-                    <td class="tg-wa1i" rowspan="2">RVC <br>(adaptive)</td>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">62.16%</td>
+                    <td class="text-percentage"></td>
+                    <td class="text-percentage">51.26%</td>
+                    <td class="text-percentage">50.05%</td>
+                    <td class="text-percentage">52.98%</td>
+                    <td class="text-percentage">51.51%</td>
+                    <td class="text-percentage">49.73%</td>
+                    <td class="text-percentage">49.90%</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="4">RVC <br>(adaptive)</td>
                     <td class="tg-wa1i">RM WM</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/rvc/rm/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"></td>
@@ -375,6 +463,17 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/rvc/rm/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">55.58%</td>
+                    <td class="text-percentage"></td>
+                    <td class="text-percentage">49.96%</td>
+                    <td class="text-percentage">49.97%</td>
+                    <td class="text-percentage">57.88%</td>
+                    <td class="text-percentage">49.95%</td>
+                    <td class="text-percentage">50.01%</td>
+                    <td class="text-percentage">49.50%</td>
+                </tr>
+                <tr>
                     <td class="tg-wa1i">ADD WM</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/rvc/add/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"></td>
@@ -384,6 +483,17 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/rvc/add/patchwork.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/rvc/add/norm_space.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 140px;"><source src="audio_samples/ai/vc/rvc/add/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">100.00%</td>
+                    <td class="text-percentage"></td>
+                    <td class="text-percentage">54.34%</td>
+                    <td class="text-percentage">49.39%</td>
+                    <td class="text-percentage">52.48%</td>
+                    <td class="text-percentage">56.44%</td>
+                    <td class="text-percentage">50.41%</td>
+                    <td class="text-percentage">50.46%</td>
                 </tr>
             </tbody>
         </table>
@@ -413,7 +523,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="tg-wa1i" rowspan="3">Tacotron2</td>
+                    <td class="tg-wa1i" rowspan="6">Tacotron2</td>
                     <td class="tg-wa1i">Griffin-Lim</td>
                     <td class="tg-0pky">[audio]</td>
                     <td class="tg-0pky">[audio]</td>
@@ -423,6 +533,17 @@
                     <td class="tg-0pky">[audio]</td>
                     <td class="tg-0pky">[audio]</td>
                     <td class="tg-0pky">[audio]</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">100.00%</td>
+                    <td class="text-percentage"></td>
+                    <td class="text-percentage">49.83%</td>
+                    <td class="text-percentage">49.91%</td>
+                    <td class="text-percentage">58.50%</td>
+                    <td class="text-percentage">59.29%</td>
+                    <td class="text-percentage">50.20%</td>
+                    <td class="text-percentage">49.69%</td>
                 </tr>
                 <tr>
                     <td class="tg-wa1i">HiFi-GAN</td>
@@ -436,6 +557,17 @@
                     <td class="tg-0pky">[audio]</td>
                 </tr>
                 <tr>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">91.36%</td>
+                    <td class="text-percentage"></td>
+                    <td class="text-percentage">50.14%</td>
+                    <td class="text-percentage">50.06%</td>
+                    <td class="text-percentage">58.08%</td>
+                    <td class="text-percentage">50.16%</td>
+                    <td class="text-percentage">49.33%</td>
+                    <td class="text-percentage">50.45%</td>
+                </tr>
+                <tr>
                     <td class="tg-wa1i">HiFi-GAN*</td>
                     <td class="tg-0pky">[audio]</td>
                     <td class="tg-0pky">[audio]</td>
@@ -447,7 +579,18 @@
                     <td class="tg-0pky">[audio]</td>
                 </tr>
                 <tr>
-                    <td class="tg-wa1i" rowspan="3">Fastspeech2</td>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">100.00%</td>
+                    <td class="text-percentage"></td>
+                    <td class="text-percentage">78.56%</td>
+                    <td class="text-percentage">50.22%</td>
+                    <td class="text-percentage">59.03%</td>
+                    <td class="text-percentage">63.69%</td>
+                    <td class="text-percentage">50.58%</td>
+                    <td class="text-percentage">51.49%</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="6">Fastspeech2</td>
                     <td class="tg-wa1i">Griffin-Lim <br>(adaptive)</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 134px;"><source src="audio_samples/ai/tts/Fastspeech2/gl/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"></td>
@@ -457,6 +600,17 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 134px;"><source src="audio_samples/ai/tts/Fastspeech2/gl/patchwork.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 134px;"><source src="audio_samples/ai/tts/Fastspeech2/gl/norm_space.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 134px;"><source src="audio_samples/ai/tts/Fastspeech2/gl/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">100.00%</td>
+                    <td class="text-percentage"></td>
+                    <td class="text-percentage">49.64%</td>
+                    <td class="text-percentage">49.39%</td>
+                    <td class="text-percentage">67.39%</td>
+                    <td class="text-percentage">62.96%</td>
+                    <td class="text-percentage">50.13%</td>
+                    <td class="text-percentage">49.84%</td>
                 </tr>
                 <tr>
                     <td class="tg-wa1i">HiFi-GAN <br>(adaptive)</td>
@@ -470,6 +624,17 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 134px;"><source src="audio_samples/ai/tts/Fastspeech2/u_hifi/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">92.48%</td>
+                    <td class="text-percentage"></td>
+                    <td class="text-percentage">50.86%</td>
+                    <td class="text-percentage">49.80%</td>
+                    <td class="text-percentage">68.94%</td>
+                    <td class="text-percentage">54.61%</td>
+                    <td class="text-percentage">50.04%</td>
+                    <td class="text-percentage">50.55%</td>
+                </tr>
+                <tr>
                     <td class="tg-wa1i">HiFi-GAN* <br>(adaptive*)</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 134px;"><source src="audio_samples/ai/tts/Fastspeech2/fine_hifi/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"></td>
@@ -481,7 +646,19 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 134px;"><source src="audio_samples/ai/tts/Fastspeech2/fine_hifi/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
-                    <th class="tg-wa1i" colspan="2">YourTTS <br>(zero-shot)</th>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">100.00%</td>
+                    <td class="text-percentage"></td>
+                    <td class="text-percentage">83.54%</td>
+                    <td class="text-percentage">49.45%</td>
+                    <td class="text-percentage">69.71%</td>
+                    <td class="text-percentage">65.38%</td>
+                    <td class="text-percentage">49.56%</td>
+                    <td class="text-percentage">50.33%</td>
+                </tr>
+                <tr>
+                    <th class="tg-wa1i" colspan="1" rowspan="2">YourTTS <br>(zero-shot)</th>
+                    <td class="tg-wa1i">Audio <br>Sample</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 134px;"><source src="audio_samples/ai/tts/YourTTS/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 134px;"><source src="audio_samples/ai/tts/YourTTS/audioseal.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 134px;"><source src="audio_samples/ai/tts/YourTTS/wavmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
@@ -490,6 +667,17 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 134px;"><source src="audio_samples/ai/tts/YourTTS/patchwork.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 134px;"><source src="audio_samples/ai/tts/YourTTS/norm_space.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 134px;"><source src="audio_samples/ai/tts/YourTTS/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">100.00%</td>
+                    <td class="text-percentage"></td>
+                    <td class="text-percentage">83.54%</td>
+                    <td class="text-percentage">49.45%</td>
+                    <td class="text-percentage">69.71%</td>
+                    <td class="text-percentage">65.38%</td>
+                    <td class="text-percentage">49.56%</td>
+                    <td class="text-percentage">50.33%</td>
                 </tr>
             </tbody>
         </table>
@@ -520,7 +708,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="tg-wa1i" rowspan="3">Close<br>(0.5m)</td>
+                    <td class="tg-wa1i" rowspan="6">Close<br>(0.5m)</td>
                     <td class="tg-wa1i">Default</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/close/default/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/close/default/audioseal.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
@@ -531,6 +719,18 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/close/default/norm_space.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/close/default/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/close/default/robustdnn.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">100.00%</td>
+                    <td class="text-percentage">63.75%</td>
+                    <td class="text-percentage">97.50%</td>
+                    <td class="text-percentage">53.00%</td>
+                    <td class="text-percentage">55.00%</td>
+                    <td class="text-percentage">77.50%</td>
+                    <td class="text-percentage">52.50%</td>
+                    <td class="text-percentage">50.00%</td>
+                    <td class="text-percentage">72.34%</td>
                 </tr>
                 <tr>
                     <td class="tg-wa1i">HyperX Mic</td>
@@ -545,6 +745,18 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/close/hyperx/robustdnn.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">100.00%</td>
+                    <td class="text-percentage">42.50%</td>
+                    <td class="text-percentage">98.75%</td>
+                    <td class="text-percentage">62.00%</td>
+                    <td class="text-percentage">62.50%</td>
+                    <td class="text-percentage">68.75%</td>
+                    <td class="text-percentage">47.50%</td>
+                    <td class="text-percentage">52.50%</td>
+                    <td class="text-percentage">63.01%</td>
+                </tr>
+                <tr>
                     <td class="tg-wa1i">Logitech Spk</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/close/logitech/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/close/logitech/audioseal.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
@@ -557,7 +769,19 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/close/logitech/robustdnn.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
-                    <td class="tg-wa1i">Medium<br>(2.5m)</td>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">100.00%</td>
+                    <td class="text-percentage">53.75%</td>
+                    <td class="text-percentage">100.00%</td>
+                    <td class="text-percentage">48.00%</td>
+                    <td class="text-percentage">60.00%</td>
+                    <td class="text-percentage">70.00%</td>
+                    <td class="text-percentage">51.25%</td>
+                    <td class="text-percentage">53.75%</td>
+                    <td class="text-percentage">72.46%</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="2">Medium<br>(2.5m)</td>
                     <td class="tg-wa1i">Default</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/med/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/med/audioseal.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
@@ -570,7 +794,19 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/med/robustdnn.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
-                    <td class="tg-wa1i">Far<br>(5m)</td>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">88.00%</td>
+                    <td class="text-percentage">48.75%</td>
+                    <td class="text-percentage">56.25%</td>
+                    <td class="text-percentage">51.50%</td>
+                    <td class="text-percentage">62.50%</td>
+                    <td class="text-percentage">67.50%</td>
+                    <td class="text-percentage">53.75%</td>
+                    <td class="text-percentage">48.75%</td>
+                    <td class="text-percentage">61.33%</td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i" rowspan="2">Far<br>(5m)</td>
                     <td class="tg-wa1i">Default</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/far/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/far/audioseal.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
@@ -581,6 +817,18 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/far/norm_space.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/far/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 122px;"><source src="audio_samples/physical/far/robustdnn.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                </tr>
+                <tr>
+                    <td class="tg-wa1i">Acc.</td>
+                    <td class="text-percentage">64.00%</td>
+                    <td class="text-percentage">55.00%</td>
+                    <td class="text-percentage">43.75%</td>
+                    <td class="text-percentage">52.00%</td>
+                    <td class="text-percentage">48.75%</td>
+                    <td class="text-percentage">63.75%</td>
+                    <td class="text-percentage">51.25%</td>
+                    <td class="text-percentage">48.75%</td>
+                    <td class="text-percentage">59.49%</td>
                 </tr>
             </tbody>
         </table>
