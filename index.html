@@ -239,8 +239,11 @@
 
         <h5>Voice Conversion</h5>
         <div style="margin-top: 10px; font-size: 16px; line-height: 1.6; text-align: left;">
-            We directly feed the watermarked audio samples to the Voice Conversion Models and the goal is to get
-            unwatermarked audio samples from the Voice Conversion Models.
+            For zero-shot/few-shot scenarios, we directly feed the watermarked audio samples to the pre-trained Voice
+            Conversion Models and the goal is to romove/add watermark from the audio samples though the Voice Conversion
+            Models. For adaptive scenarios, we finetune the unwatermarked audio samples on the Voice Conversion Models
+            and the goal is to teach the Voice Conversion Models to learn to remove/add the watermark from the audio
+            samples.
         </div>
         <table class="tg">
             <thead>
@@ -258,7 +261,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="tg-wa1i" rowspan="2">AdaIn-VC</td>
+                    <td class="tg-wa1i" rowspan="3">AdaIn-VC <br>(zero-shot)</td>
                     <td class="tg-wa1i">RM WM</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/audioseal.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
@@ -268,6 +271,34 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/patchwork.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/norm_space.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+        <table class="tg">
+            <thead>
+                <tr>
+                    <th class="tg-wa1i" colspan="2"></th>
+                    <th class="tg-7btt">Timbre</th>
+                    <th class="tg-7btt">AudioSeal</th>
+                    <th class="tg-7btt">WavMark</th>
+                    <th class="tg-7btt">SilentCipher</th>
+                    <th class="tg-7btt">FSVC</th>
+                    <th class="tg-7btt">Patchwork</th>
+                    <th class="tg-7btt">Norm-Space</th>
+                    <th class="tg-7btt">audiowmark</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="tg-wa1i" rowspan="2">AdaIn-VC <br>(zero-shot)</td>
+                    <td class="tg-wa1i">RM WM</td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/audioseal.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/wavmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/silentcipher.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/fsvc.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/patchwork.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/norm_space.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+                    <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/adaptive_vc/rm/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
+
+                </tr>
                 </tr>
                 <tr>
                     <td class="tg-wa1i">ADD WM</td>
@@ -281,7 +312,7 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/adaptive_vc/add/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
-                    <td class="tg-wa1i" rowspan="2">FragmentVC</td>
+                    <td class="tg-wa1i" rowspan="2">FragmentVC <br>(zero-shot)</td>
                     <td class="tg-wa1i">RM WM</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/FragmentVC/rm/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"></td>
@@ -304,7 +335,7 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/FragmentVC/add/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
-                    <td class="tg-wa1i" rowspan="2">MediumVC</td>
+                    <td class="tg-wa1i" rowspan="2">MediumVC <br>(zero-shot)</td>
                     <td class="tg-wa1i">RM WM</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/MediumVC/rm/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/MediumVC/rm/audioseal.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
@@ -327,7 +358,7 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/MediumVC/add/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
-                    <td class="tg-wa1i" rowspan="2">YourTTS VC</td>
+                    <td class="tg-wa1i" rowspan="2">YourTTS VC <br>(zero-shot)</td>
                     <td class="tg-wa1i">RM WM</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/YourTTS/rm/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/YourTTS/rm/audioseal.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
@@ -350,7 +381,7 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/YourTTS/add/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
-                    <td class="tg-wa1i" rowspan="2">RVC</td>
+                    <td class="tg-wa1i" rowspan="2">RVC <br>(adaptive)</td>
                     <td class="tg-wa1i">RM WM</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/vc/rvc/rm/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"></td>
@@ -378,9 +409,11 @@
         <br>
         <h5>Text-to-Speech</h5>
         <div style="margin-top: 10px; font-size: 16px; line-height: 1.6; text-align: left;">
-            We directly feed the text that aligns with the watermarked audio, and also provides the watermarked audio as
-            a reference to the pre-trained TTS model, to generate a sound that seems like the watermarked audiosource,
-            without including the watermark.
+            For the zero-shot configuration, we feed the text that aligns with the watermarked audio, and also provides
+            the watermarked audio as a reference to the pre-trained text-to-Speech models, to generate a sound that
+            seems like the watermarked audio source, without including the watermark. For the adaptive case, we
+            construct a watermarked dataset to finetune the TTS model to get a better audio similarity of the victim’s
+            sound. Then inference of the fine-tuned text-to-Speech models with different text.
         </div>
         <table class="tg">
             <thead>
@@ -433,7 +466,7 @@
                 </tr>
                 <tr>
                     <td class="tg-wa1i" rowspan="3">Fastspeech2</td>
-                    <td class="tg-wa1i">Griffin-Lim</td>
+                    <td class="tg-wa1i">Griffin-Lim <br>(adaptive)</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/tts/Fastspeech2/gl/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/tts/Fastspeech2/gl/wavmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
@@ -444,7 +477,7 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/tts/Fastspeech2/gl/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
-                    <td class="tg-wa1i">HiFi-GAN</td>
+                    <td class="tg-wa1i">HiFi-GAN <br>(adaptive)</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/tts/Fastspeech2/u_hifi/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/tts/Fastspeech2/u_hifi/wavmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
@@ -455,7 +488,7 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/tts/Fastspeech2/u_hifi/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
-                    <td class="tg-wa1i">HiFi-GAN*</td>
+                    <td class="tg-wa1i">HiFi-GAN* <br>(adaptive*)</td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/tts/Fastspeech2/fine_hifi/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/tts/Fastspeech2/fine_hifi/wavmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
@@ -466,7 +499,7 @@
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/tts/Fastspeech2/fine_hifi/audiowmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                 </tr>
                 <tr>
-                    <th class="tg-wa1i" colspan="2">YourTTS</th>
+                    <th class="tg-wa1i" colspan="2">YourTTS <br>(zero-shot)</th>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/tts/YourTTS/timbre.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/tts/YourTTS/audioseal.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
                     <td class="tg-0pky"><audio class="class_audio" controls="" style="width: 100px;"><source src="audio_samples/ai/tts/YourTTS/wavmark.wav" type="audio/wav">Your browser does not support the audio tag</audio></td>
