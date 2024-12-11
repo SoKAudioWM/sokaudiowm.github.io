@@ -169,7 +169,7 @@
         <div style="border-top: 1px solid black; margin-top: 20px; margin-bottom: 10px;"></div>
         <h3>Watermarked Audio Samples</h3>
         <div style="margin-top: 10px; font-size: 16px; line-height: 1.6; text-align: left;">
-            Below, we present audio examples to demonstrate each attack on different watermarking schemes.
+            Below, we provide audio examples showcasing various watermarking schemes.
         </div>
         <table class="tg">
             <thead>
@@ -253,14 +253,16 @@
 
         <div style="border-top: 1px solid grey; margin-top: 20px; margin-bottom: 10px;"></div>
         <h3>AI-Induced Distortion Attacks</h3>
-
+        <div style="margin-top: 10px; font-size: 16px; line-height: 1.6; text-align: left;">
+            For AI-induced distortion attacks, we present results for voice conversion and Text-to-Speech (TTS) attacks
+            conducted on the LJ Speech dataset.
+        </div>
         <h5>Voice Conversion</h5>
         <div style="margin-top: 10px; font-size: 16px; line-height: 1.6; text-align: left;">
-            For zero-shot/few-shot scenarios, we directly feed the watermarked audio samples to the pre-trained Voice
-            Conversion Models and the goal is to romove/add watermark from the audio samples though the Voice Conversion
-            Models. For adaptive scenarios, we finetune the unwatermarked audio samples on the Voice Conversion Models
-            and the goal is to teach the Voice Conversion Models to learn to remove/add the watermark from the audio
-            samples.
+            In zero-shot and few-shot scenarios, the watermarked audio samples are directly input into pre-trained Voice
+            Conversion Models, with the goal of removing or adding the watermark through these models. In adaptive
+            scenarios, the Voice Conversion Models are fine-tuned using unwatermarked audio samples, aiming to train the
+            models to learn how to remove or add the watermark to the audio samples.
         </div>
         <table class="tg">
             <thead>
@@ -677,14 +679,14 @@
                 </tr>
                 <tr>
                     <td class="tg-wa1i">Acc.</td>
-                    <td class="text-percentage"><span style="color: green;">100.00%</span></td>
-                    <td class="text-percentage"></td>
-                    <td class="text-percentage"><span style="color: green;">83.54%</span></td>
+                    <td class="text-percentage"><span style="color: red;">54.20%</span></td>
+                    <td class="text-percentage"><span style="color: red;">53.81%</span></td>
+                    <td class="text-percentage"><span style="color: red;">49.18%</span></td>
+                    <td class="text-percentage"><span style="color: red;">49.67%</span></td>
+                    <td class="text-percentage"><span style="color: red;">54.59%</span></td>
+                    <td class="text-percentage"><span style="color: red;">51.68%</span></td>
+                    <td class="text-percentage"><span style="color: red;">46.80%</span></td>
                     <td class="text-percentage"><span style="color: red;">49.45%</span></td>
-                    <td class="text-percentage"><span style="color: red;">69.71%</span></td>
-                    <td class="text-percentage"><span style="color: red;">65.38%</span></td>
-                    <td class="text-percentage"><span style="color: red;">49.56%</span></td>
-                    <td class="text-percentage"><span style="color: red;">50.33%</span></td>
                 </tr>
             </tbody>
         </table>
@@ -692,7 +694,7 @@
         <div style="border-top: 1px solid grey; margin-top: 20px; margin-bottom: 10px;"></div>
         <h3>Physical-Level Distortion Attacks</h3>
         <p>We re-record audio samples from the LJ Speech dataset using various equipment at different distances and
-            report the Bit Recovery Accuracy (<b>Acc.</b>) for each watermarking technique.</p>
+            report the Bit Recovery Accuracy (<b>Acc.</b>) for each watermarking technique on the LJ Speech dataset.</p>
         </p>
         <ul>
             <li><b>Default</b>: Macbook Pro 13-inch, M1, 2020, Built-in Microphone and Speaker</li>
@@ -845,7 +847,7 @@
         <h3>Signal-Level Distortion Attacks</h3>
         <p>We directly manipulate the audio signal to attempt erasing or degrading the watermark using various
             signal-level distortions. The distorted audio samples and their corresponding Bits Recovery Accuracy
-            (<b>Acc.</b>) are reported for each watermarking technique.</p>
+            (<b>Acc.</b>) are reported for each watermarking technique on the LJ Speech dataset.</p>
         <table class="tg">
             <thead>
                 <tr>
