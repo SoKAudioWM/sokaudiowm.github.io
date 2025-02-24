@@ -1528,8 +1528,50 @@
                 </tr>
             </tbody>
         </table>
-
         <div style="border-top: 1px solid grey; margin-top: 20px; margin-bottom: 10px;"></div>
+        <h3>LibriSpeech Signal-Level Distortion Attack Accuracy</h3>
+        <p>We extended our robustness evaluation to the LibriSpeech dataset, focusing on three attacks:
+              <b>Pitch Shift</b>, <b>Time Stretch</b>, and <b>Cutting Audio</b>. Each radar chart shows watermark <b>Acc.</b>
+            (0.0 to 1.0) across six watermarking techniques. The <span style="color: blue;">blue</span> polygon represents
+            LJSpeech, while the <span style="color: green;">green</span> polygon represents LibriSpeech.
+                <div style="display: flex; justify-content: space-evenly; align-items: center; gap: 20px;">
+          <figure style="margin: 0;">
+            <img
+              src="LibriSpeech_Acc/pitch_shift.png"
+              alt="Pitch Shift Attack Radar Chart"
+              style="width: 440px; height: auto;"
+            />
+            <figcaption style="font-size: 20px; color: #555; text-align: center;">
+              <b>Pitch Shift</b>
+            </figcaption>
+          </figure>
+
+          <figure style="margin: 0;">
+            <img
+              src="LibriSpeech_Acc/time_stretch.png"
+              alt="Time Stretch Attack Radar Chart"
+              style="width: 440px; height: auto;"
+            />
+            <figcaption style="font-size: 20px; color: #555; text-align: center;">
+              <b>Time Stretch</b>
+            </figcaption>
+          </figure>
+
+          <figure style="margin: 0;">
+            <img
+              src="LibriSpeech_Acc/cutting_audio.png"
+              alt="Cutting Audio Attack Radar Chart"
+              style="width: 440px; height: auto;"
+            />
+            <figcaption style="font-size: 20px; color: #555; text-align: center;">
+              <b>Cutting Audio</b>
+            </figcaption>
+          </figure>
+        </div>
+
+
+
+
     </div>
 </body>
 
